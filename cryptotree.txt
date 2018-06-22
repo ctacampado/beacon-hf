@@ -1,0 +1,219 @@
+crypto-config
+├── ordererOrganizations
+│   └── beacon.ph
+│       ├── ca
+│       │   ├── 9791663480c5f0a6f5c4bc7ea0247ef55a8a6c4680e739ea5bf65abc7fc808ab_sk
+│       │   └── ca.beacon.ph-cert.pem
+│       ├── msp
+│       │   ├── admincerts
+│       │   │   └── Admin@beacon.ph-cert.pem
+│       │   ├── cacerts
+│       │   │   └── ca.beacon.ph-cert.pem
+│       │   └── tlscacerts
+│       │       └── tlsca.beacon.ph-cert.pem
+│       ├── orderers
+│       │   └── orderer.beacon.ph
+│       │       ├── msp
+│       │       │   ├── admincerts
+│       │       │   │   └── Admin@beacon.ph-cert.pem
+│       │       │   ├── cacerts
+│       │       │   │   └── ca.beacon.ph-cert.pem
+│       │       │   ├── keystore
+│       │       │   │   └── 7a486208f41cc5fa7330ea951ddccbe8e27586dac66c2b896886ef5f73c246fc_sk
+│       │       │   ├── signcerts
+│       │       │   │   └── orderer.beacon.ph-cert.pem
+│       │       │   └── tlscacerts
+│       │       │       └── tlsca.beacon.ph-cert.pem
+│       │       └── tls
+│       │           ├── ca.crt
+│       │           ├── server.crt
+│       │           └── server.key
+│       ├── tlsca
+│       │   ├── 4b9cf96846ad051cc0224f66cbfbad3f71db8aa17ef79b27c812021545df0c75_sk
+│       │   └── tlsca.beacon.ph-cert.pem
+│       └── users
+│           └── Admin@beacon.ph
+│               ├── msp
+│               │   ├── admincerts
+│               │   │   └── Admin@beacon.ph-cert.pem
+│               │   ├── cacerts
+│               │   │   └── ca.beacon.ph-cert.pem
+│               │   ├── keystore
+│               │   │   └── 1c99775339fcd0433f290dc0651af10aac495246724755b804d5179e16dbfb08_sk
+│               │   ├── signcerts
+│               │   │   └── Admin@beacon.ph-cert.pem
+│               │   └── tlscacerts
+│               │       └── tlsca.beacon.ph-cert.pem
+│               └── tls
+│                   ├── ca.crt
+│                   ├── client.crt
+│                   └── client.key
+└── peerOrganizations
+    ├── donors.beacon.ph
+    │   ├── ca
+    │   │   ├── a5ec7561e7677ff6c666c3c17f7dae94f77977eae0227f55db88ff1a09494aa2_sk
+    │   │   └── ca.donors.beacon.ph-cert.pem
+    │   ├── msp
+    │   │   ├── admincerts
+    │   │   │   └── Admin@donors.beacon.ph-cert.pem
+    │   │   ├── cacerts
+    │   │   │   └── ca.donors.beacon.ph-cert.pem
+    │   │   ├── config.yaml
+    │   │   └── tlscacerts
+    │   │       └── tlsca.donors.beacon.ph-cert.pem
+    │   ├── peers
+    │   │   ├── peer0.donors.beacon.ph
+    │   │   │   ├── msp
+    │   │   │   │   ├── admincerts
+    │   │   │   │   │   └── Admin@donors.beacon.ph-cert.pem
+    │   │   │   │   ├── cacerts
+    │   │   │   │   │   └── ca.donors.beacon.ph-cert.pem
+    │   │   │   │   ├── config.yaml
+    │   │   │   │   ├── keystore
+    │   │   │   │   │   └── f4c889a36dc2b82315d6f0dd72336b756415ccf215f8167ccd8641b70c147852_sk
+    │   │   │   │   ├── signcerts
+    │   │   │   │   │   └── peer0.donors.beacon.ph-cert.pem
+    │   │   │   │   └── tlscacerts
+    │   │   │   │       └── tlsca.donors.beacon.ph-cert.pem
+    │   │   │   └── tls
+    │   │   │       ├── ca.crt
+    │   │   │       ├── server.crt
+    │   │   │       └── server.key
+    │   │   └── peer1.donors.beacon.ph
+    │   │       ├── msp
+    │   │       │   ├── admincerts
+    │   │       │   │   └── Admin@donors.beacon.ph-cert.pem
+    │   │       │   ├── cacerts
+    │   │       │   │   └── ca.donors.beacon.ph-cert.pem
+    │   │       │   ├── config.yaml
+    │   │       │   ├── keystore
+    │   │       │   │   └── a836f7f0c2f15d4b004863150331bef11bb9196d01f87e79ee45f4bc7a13389a_sk
+    │   │       │   ├── signcerts
+    │   │       │   │   └── peer1.donors.beacon.ph-cert.pem
+    │   │       │   └── tlscacerts
+    │   │       │       └── tlsca.donors.beacon.ph-cert.pem
+    │   │       └── tls
+    │   │           ├── ca.crt
+    │   │           ├── server.crt
+    │   │           └── server.key
+    │   ├── tlsca
+    │   │   ├── d2ff29192934c9513332088621747f578b7a0dec84441d22d06879a8c2107269_sk
+    │   │   └── tlsca.donors.beacon.ph-cert.pem
+    │   └── users
+    │       ├── Admin@donors.beacon.ph
+    │       │   ├── msp
+    │       │   │   ├── admincerts
+    │       │   │   │   └── Admin@donors.beacon.ph-cert.pem
+    │       │   │   ├── cacerts
+    │       │   │   │   └── ca.donors.beacon.ph-cert.pem
+    │       │   │   ├── keystore
+    │       │   │   │   └── 9ce45bffde4b000512a2f1e03dc437966bc9410acbe1ea13241e7ca8e74d357a_sk
+    │       │   │   ├── signcerts
+    │       │   │   │   └── Admin@donors.beacon.ph-cert.pem
+    │       │   │   └── tlscacerts
+    │       │   │       └── tlsca.donors.beacon.ph-cert.pem
+    │       │   └── tls
+    │       │       ├── ca.crt
+    │       │       ├── client.crt
+    │       │       └── client.key
+    │       └── User1@donors.beacon.ph
+    │           ├── msp
+    │           │   ├── admincerts
+    │           │   │   └── User1@donors.beacon.ph-cert.pem
+    │           │   ├── cacerts
+    │           │   │   └── ca.donors.beacon.ph-cert.pem
+    │           │   ├── keystore
+    │           │   │   └── 270cd55ff142731725670ad3c663d1c9d65828e2907cd896bfff3a1a815433df_sk
+    │           │   ├── signcerts
+    │           │   │   └── User1@donors.beacon.ph-cert.pem
+    │           │   └── tlscacerts
+    │           │       └── tlsca.donors.beacon.ph-cert.pem
+    │           └── tls
+    │               ├── ca.crt
+    │               ├── client.crt
+    │               └── client.key
+    └── redcross.org.ph
+        ├── ca
+        │   ├── 53b7663dc8357259da97f83e302e4831c039754c72a9f12dd2a775b57b3b71b0_sk
+        │   └── ca.redcross.org.ph-cert.pem
+        ├── msp
+        │   ├── admincerts
+        │   │   └── Admin@redcross.org.ph-cert.pem
+        │   ├── cacerts
+        │   │   └── ca.redcross.org.ph-cert.pem
+        │   ├── config.yaml
+        │   └── tlscacerts
+        │       └── tlsca.redcross.org.ph-cert.pem
+        ├── peers
+        │   ├── peer0.redcross.org.ph
+        │   │   ├── msp
+        │   │   │   ├── admincerts
+        │   │   │   │   └── Admin@redcross.org.ph-cert.pem
+        │   │   │   ├── cacerts
+        │   │   │   │   └── ca.redcross.org.ph-cert.pem
+        │   │   │   ├── config.yaml
+        │   │   │   ├── keystore
+        │   │   │   │   └── 409566d0fee252101d149ba47d13d9ec2a1d4993958ac9d3ad2b6a31a8124879_sk
+        │   │   │   ├── signcerts
+        │   │   │   │   └── peer0.redcross.org.ph-cert.pem
+        │   │   │   └── tlscacerts
+        │   │   │       └── tlsca.redcross.org.ph-cert.pem
+        │   │   └── tls
+        │   │       ├── ca.crt
+        │   │       ├── server.crt
+        │   │       └── server.key
+        │   └── peer1.redcross.org.ph
+        │       ├── msp
+        │       │   ├── admincerts
+        │       │   │   └── Admin@redcross.org.ph-cert.pem
+        │       │   ├── cacerts
+        │       │   │   └── ca.redcross.org.ph-cert.pem
+        │       │   ├── config.yaml
+        │       │   ├── keystore
+        │       │   │   └── c94e62cc3f83a2c3a4c66a89ec3986748e19bb280c9174933f3abdda372f30e2_sk
+        │       │   ├── signcerts
+        │       │   │   └── peer1.redcross.org.ph-cert.pem
+        │       │   └── tlscacerts
+        │       │       └── tlsca.redcross.org.ph-cert.pem
+        │       └── tls
+        │           ├── ca.crt
+        │           ├── server.crt
+        │           └── server.key
+        ├── tlsca
+        │   ├── bf9550bec5102a474c4bf062577f38dc333c0a7e61cb013d65fa83b7bc592373_sk
+        │   └── tlsca.redcross.org.ph-cert.pem
+        └── users
+            ├── Admin@redcross.org.ph
+            │   ├── msp
+            │   │   ├── admincerts
+            │   │   │   └── Admin@redcross.org.ph-cert.pem
+            │   │   ├── cacerts
+            │   │   │   └── ca.redcross.org.ph-cert.pem
+            │   │   ├── keystore
+            │   │   │   └── be8f46bfd26d95ab2f3e77b6ffc316163e6f8ce5f541a7beef384b69fc13b0aa_sk
+            │   │   ├── signcerts
+            │   │   │   └── Admin@redcross.org.ph-cert.pem
+            │   │   └── tlscacerts
+            │   │       └── tlsca.redcross.org.ph-cert.pem
+            │   └── tls
+            │       ├── ca.crt
+            │       ├── client.crt
+            │       └── client.key
+            └── User1@redcross.org.ph
+                ├── msp
+                │   ├── admincerts
+                │   │   └── User1@redcross.org.ph-cert.pem
+                │   ├── cacerts
+                │   │   └── ca.redcross.org.ph-cert.pem
+                │   ├── keystore
+                │   │   └── 8e96c91958c31663d73144d376bad488a9d288d18426c5cc6ab23a9ebb116e95_sk
+                │   ├── signcerts
+                │   │   └── User1@redcross.org.ph-cert.pem
+                │   └── tlscacerts
+                │       └── tlsca.redcross.org.ph-cert.pem
+                └── tls
+                    ├── ca.crt
+                    ├── client.crt
+                    └── client.key
+
+109 directories, 107 files

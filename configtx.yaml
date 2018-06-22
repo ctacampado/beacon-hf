@@ -1,0 +1,158 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+################################################################################
+#
+#   PROFILES
+#
+#   Different configuration profiles may be encoded here to be specified as
+#   parameters to the configtxgen tool. The profiles which specify consortiums
+#   are to be used for generating the orderer genesis block. With the correct
+#   consortium members defined in the orderer genesis block, channel creation
+#   requests may be generated with only the org member names and a consortium
+#   name.
+#
+################################################################################
+Profiles:
+
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            Beaconxrcph:
+                Organizations:
+                    - *donors
+                    - *redcrossph
+
+    donatercphch:
+        Consortium: Beaconxrcph
+        Application:
+            Organizations:
+                - *donors
+                - *redcrossph
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+################################################################################
+#
+#   ORGANIZATIONS
+#
+#   This section defines the organizational identities that can be referenced
+#   in the configuration profiles.
+#
+################################################################################
+Organizations:
+
+    - &OrdererOrg
+
+        Name: OrdererOrg
+
+        ID: OrdererMSP
+
+        MSPDir: crypto-config/ordererOrganizations/beacon.ph/msp
+
+    - &donors
+
+        Name: donorsMSP
+
+        ID: donorsMSP
+
+        MSPDir: crypto-config/peerOrganizations/donors.beacon.ph/msp
+
+        AnchorPeers:
+            - Host: peer0.donors.beacon.ph
+              Port: 7051
+
+    - &redcrossph
+        Name: redcrossphMSP
+
+        ID: redcrossphMSP
+
+        MSPDir: crypto-config/peerOrganizations/redcross.org.ph/msp
+
+        AnchorPeers:
+            - Host: peer0.redcross.org.ph
+              Port: 7051
+
+
+################################################################################
+#
+#   ORDERER
+#
+#   This section defines the values to encode into a config transaction or
+#   genesis block for orderer related parameters.
+#
+################################################################################
+Orderer: &OrdererDefaults
+
+    OrdererType: solo
+
+    Addresses:
+        - orderer.beacon.ph:7050
+
+    BatchTimeout: 2s
+
+    BatchSize:
+
+        MaxMessageCount: 10
+
+        AbsoluteMaxBytes: 99 MB
+
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+
+    Organizations:
+
+################################################################################
+#
+#   APPLICATION
+#
+#   This section defines the values to encode into a config transaction or
+#   genesis block for application-related parameters.
+#
+################################################################################
+Application: &ApplicationDefaults
+
+    Organizations:
+
+################################################################################
+#
+#   CAPABILITIES
+#
+#   This section defines the capabilities of fabric network. This is a new
+#   concept as of v1.1.0 and should not be utilized in mixed networks with
+#   v1.0.x peers and orderers.  Capabilities define features which must be
+#   present in a fabric binary for that binary to safely participate in the
+#   fabric network.  For instance, if a new MSP type is added, newer binaries
+#   might recognize and validate the signatures from this type, while older
+#   binaries without this support would be unable to validate those
+#   transactions.  This could lead to different versions of the fabric binaries
+#   having different world states.  Instead, defining a capability for a channel
+#   informs those binaries without this capability that they must cease
+#   processing transactions until they have been upgraded.  For v1.0.x if any
+#   capabilities are defined (including a map with all capabilities turned off)
+#   then the v1.0.x peer will deliberately crash.
+#
+################################################################################
+Capabilities:
+
+    Global: &ChannelCapabilities
+        V1_1: true
+
+    Orderer: &OrdererCapabilities
+        V1_1: true
+
+    Application: &ApplicationCapabilities
+        V1_1: true

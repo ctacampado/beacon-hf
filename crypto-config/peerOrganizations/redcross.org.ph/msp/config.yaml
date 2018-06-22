@@ -1,0 +1,8 @@
+NodeOUs:
+  Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/ca.redcross.org.ph-cert.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/ca.redcross.org.ph-cert.pem
+    OrganizationalUnitIdentifier: peer

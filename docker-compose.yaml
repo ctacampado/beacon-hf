@@ -1,0 +1,246 @@
+# BEACON - Based on docker-compose-e2e-template.yaml
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.beacon.ph:
+  ca.donors.beacon.ph:
+  ca.redcross.org.ph:
+  peer0.donors.beacon.ph:
+  peer1.donors.beacon.ph:
+  peer0.redcross.org.ph:
+  peer1.redcross.org.ph:
+
+networks:
+  beacon:
+services:
+  ca.donors.beacon.ph:
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-donors
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.donors.beacon.ph-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a5ec7561e7677ff6c666c3c17f7dae94f77977eae0227f55db88ff1a09494aa2_sk
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.donors.beacon.ph-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/a5ec7561e7677ff6c666c3c17f7dae94f77977eae0227f55db88ff1a09494aa2_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/donors.beacon.ph/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_donors
+    networks:
+      - beacon
+
+  ca.redcross.org.ph:
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-rcph
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.redcross.org.ph-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/53b7663dc8357259da97f83e302e4831c039754c72a9f12dd2a775b57b3b71b0_sk
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.redcross.org.ph-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/53b7663dc8357259da97f83e302e4831c039754c72a9f12dd2a775b57b3b71b0_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/redcross.org.ph/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_rcph
+    networks:
+      - beacon
+
+  orderer.beacon.ph:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.beacon.ph
+    container_name: orderer.beacon.ph
+    networks:
+      - beacon
+
+  peer0.donors.beacon.ph:
+    container_name: peer0.donors.beacon.ph
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-donors.beacon.ph:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=cdb
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=cdbpw
+    depends_on:
+      - couchdb-donors.beacon.ph
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.donors.beacon.ph
+    networks:
+      - beacon
+    
+  peer1.donors.beacon.ph:
+    container_name: peer1.donors.beacon.ph
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-donors1.beacon.ph:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=cdb
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=cdbpw
+    depends_on:
+      - couchdb-donors1.beacon.ph
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.donors.beacon.ph
+    networks:
+      - beacon
+
+  peer0.redcross.org.ph:
+    container_name: peer0.redcross.org.ph
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-redcross.org.ph:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=cdb
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=cdbpw
+    depends_on:
+      - couchdb-redcross.org.ph
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.redcross.org.ph
+    networks:
+      - beacon
+  
+  peer1.redcross.org.ph:
+    container_name: peer1.redcross.org.ph
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-redcross1.org.ph:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=cdb
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=cdbpw
+    depends_on:
+      - couchdb-redcross1.org.ph
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.redcross.org.ph
+    networks:
+      - beacon
+
+  couchdb-donors.beacon.ph:
+    container_name: couchdb-donors.beacon.ph
+    image: hyperledger/fabric-couchdb
+    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    environment:
+      - COUCHDB_USER=cdb
+      - COUCHDB_PASSWORD=cdbpw
+    ports:
+      - 8984:5984
+    networks:
+      - beacon
+
+  couchdb-donors1.beacon.ph:
+    container_name: couchdb-donors1.beacon.ph
+    image: hyperledger/fabric-couchdb
+    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    environment:
+      - COUCHDB_USER=cdb
+      - COUCHDB_PASSWORD=cdbpw
+    ports:
+      - 9984:5984
+    networks:
+      - beacon
+
+  couchdb-redcross.org.ph:
+    container_name: couchdb-redcross.org.ph
+    image: hyperledger/fabric-couchdb
+    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    environment:
+      - COUCHDB_USER=cdb
+      - COUCHDB_PASSWORD=cdbpw
+    ports:
+      - 6984:5984
+    networks:
+      - beacon
+
+  couchdb-redcross1.org.ph:
+    container_name: couchdb-redcross1.org.ph
+    image: hyperledger/fabric-couchdb
+    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+    environment:
+      - COUCHDB_USER=cdb
+      - COUCHDB_PASSWORD=cdbpw
+    ports:
+      - 7984:5984
+    networks:
+      - beacon
+
+  cli-donors:
+    container_name: cli-donors
+    image: hyperledger/fabric-tools:latest
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli-donors
+      - CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051
+      - CORE_PEER_LOCALMSPID=donorsMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+        - ../go_workspace/src/beacon-co:/opt/gopath/src/chaincode/beacon-co
+    depends_on:
+      - orderer.beacon.ph
+      - peer0.donors.beacon.ph
+    networks:
+      - beacon
+
+  cli-rcph:
+    container_name: cli-rcph
+    image: hyperledger/fabric-tools:latest
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli-rcph
+      - CORE_PEER_ADDRESS=peer0.redcross.org.ph:7051
+      - CORE_PEER_LOCALMSPID=redcrossphMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/users/Admin@redcross.org.ph/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+        - ../go_workspace/src/beacon-co:/opt/gopath/src/chaincode/beacon-co
+    depends_on:
+      - orderer.beacon.ph
+      - peer0.redcross.org.ph
+    networks:
+      - beacon

@@ -1,0 +1,114 @@
+# based from base/docker-compose-base.yaml
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+  orderer.beacon.ph:
+    container_name: orderer.beacon.ph
+    image: hyperledger/fabric-orderer:latest
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=DEBUG
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ../channel-artifacts/:/var/hyperledger/orderer/
+    - ../crypto-config/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp:/var/hyperledger/orderer/msp
+    - ../crypto-config/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/tls/:/var/hyperledger/orderer/tls
+    - orderer.beacon.ph:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.donors.beacon.ph:
+    container_name: peer0.donors.beacon.ph
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.donors.beacon.ph
+      - CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.donors.beacon.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.donors.beacon.ph:7051
+      - CORE_PEER_LOCALMSPID=donorsMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls:/etc/hyperledger/fabric/tls
+        - peer0.donors.beacon.ph:/var/hyperledger/production
+        - ../../go_workspace/src/beacon-co:/opt/gopath/src/chaincode/beacon-co
+    ports:
+      - 7051:7051
+      - 7053:7053
+
+  peer1.donors.beacon.ph:
+    container_name: peer1.donors.beacon.ph
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.donors.beacon.ph
+      - CORE_PEER_ADDRESS=peer1.donors.beacon.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.donors.beacon.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.donors.beacon.ph:7051
+      - CORE_PEER_LOCALMSPID=donorsMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer1.donors.beacon.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer1.donors.beacon.ph/tls:/etc/hyperledger/fabric/tls
+        - peer1.donors.beacon.ph:/var/hyperledger/production
+    ports:
+      - 9051:7051
+      - 9053:7053
+
+  peer0.redcross.org.ph:
+    container_name: peer0.redcross.org.ph
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.redcross.org.ph
+      - CORE_PEER_ADDRESS=peer0.redcross.org.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.redcross.org.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.redcross.org.ph:7051
+      - CORE_PEER_LOCALMSPID=redcrossphMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/tls:/etc/hyperledger/fabric/tls
+        - peer0.redcross.org.ph:/var/hyperledger/production
+        - ../../go_workspace/src/beacon-co:/opt/gopath/src/chaincode/beacon-co
+    ports:
+      - 8051:7051
+      - 8053:7053
+
+  peer1.redcross.org.ph:
+    container_name: peer1.redcross.org.ph
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.redcross.org.ph
+      - CORE_PEER_ADDRESS=peer1.redcross.org.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.redcross.org.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.redcross.org.ph:7051
+      - CORE_PEER_LOCALMSPID=redcrossphMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer1.redcross.org.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer1.redcross.org.ph/tls:/etc/hyperledger/fabric/tls
+        - peer1.redcross.org.ph:/var/hyperledger/production
+    ports:
+      - 6051:7051
+      - 6053:7053

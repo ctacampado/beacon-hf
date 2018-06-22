@@ -1,0 +1,24 @@
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+OrdererOrgs:
+  - Name: Orderer
+    Domain: beacon.ph
+    Specs:
+      - Hostname: orderer
+PeerOrgs:
+  - Name: donors
+    Domain: donors.beacon.ph
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: redcrossph
+    Domain: redcross.org.ph
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
