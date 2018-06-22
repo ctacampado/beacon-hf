@@ -1,0 +1,34 @@
+[CLIENTS|ORGS]
+- Beacon Org (Donor, Beacon)
+- Auditor Org (Beacon, Auitors)
+- Charity Org1,...,n-1,n
+
+[CHANNELS]
+- identities(Chaincode Functions: Add|Approve|Reject|Modify|Query Identities{Donor, CO, Auditors})
+  -- Beacon Org: Peer0
+  -- Auditor Org: Peer0
+  -- Charity Org (ALL): Peer0
+- donateto<co-name>(Chaincode Functions: Add|Query Donations)
+  -- Beacon Org: Peer0
+  -- Auditor Org: Peer0
+  -- Charity Org (EACH has own channel): Peer0
+- campaigns<co-name>(Chaincode Functions: Add|Modify|Query Campaigns)
+  -- Beacon Org: Peer0
+  -- Auditor Org: Peer0
+  -- Charity Org (EACH has own channel): Peer0
+
+[Basic Web Services]
+  -- Accounts (identities: Add|Approve|Reject|Modify|Query, Orgs: Beacon, Auditor, Charity)
+  -- Donate (donateto<ALL>: Add|Query Donations, Orgs: Beacon, Auditor, Charity)
+  -- Campaigns (campaigns<ALL>: Add|Modify|Query Campaigns, Orgs: Beacon, Auditor, Charity)
+  -- TrustScoring (campaigns<ALL>: Modify|Query Campaigns, identities: Modify|Query Identities)
+
+["Good to have" Services and Functionality]
+  -- OAuth2-based Client Authentication and Authorization
+  -- real-time information updates
+  -- data analytics engine/service in charge of trust score aggregation, total donor aggregation (reporting and presentation) instead of chaincode
+  -- digital wallet
+  -- streamlined org onboarding
+  -- image storage
+  -- campaign blog
+  -- beacon ops monitoring
