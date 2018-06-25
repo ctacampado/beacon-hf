@@ -12,10 +12,10 @@
   -- Beacon Org: Peer0
   -- Auditor Org: Peer0
   -- Charity Org (EACH has own channel): Peer0
-- campaigns<co-name>(Chaincode Functions: Add|Modify|Query Campaigns)
+- campaigns(Chaincode Functions: Add|Modify|Query Campaigns)
   -- Beacon Org: Peer0
   -- Auditor Org: Peer0
-  -- Charity Org (EACH has own channel): Peer0
+  -- Charity Org (ALL): Peer0
 
 [Basic Web Services]
   -- Accounts (identities: Add|Approve|Reject|Modify|Query, Orgs: Beacon, Auditor, Charity)
@@ -24,6 +24,7 @@
   -- TrustScoring (campaigns<ALL>: Modify|Query Campaigns, identities: Modify|Query Identities)
 
 ["Good to have" Services and Functionality]
+  -- Real-time End of Campaign Reminder 
   -- OAuth2-based Client Authentication and Authorization
   -- real-time information updates
   -- data analytics engine/service in charge of trust score aggregation, total donor aggregation (reporting and presentation) instead of chaincode
