@@ -33,3 +33,39 @@
   -- image storage
   -- campaign blog
   -- beacon ops monitoring
+
+
+[Login  WebServer]
+[ui] --> [login.api+sdk] --> [beacon.peer]
+
+[Donor Sign-up WebServer]
+[ui] --> [signup.api+sdk] --> [beacon.peer]
+
+[Analytics-Donor Summary]
+[ui] --> [analytics.wss+sdk] --> [beacon.peer]
+
+[Analytics-CO Summary]
+[ui] --> [analytics.wss+sdk] --> [beacon.peer]
+
+[Analytics-COC Summary
+[ui] --> [analytics.wss+sdk] --> [beacon.peer]
+
+[Donor]
+[ui] --> [donor.wss+sdk] --> [beacon.peer]
+
+[Beacon]
+[ui] --> [beacon.wss+sdk] --> [beacon.peer]
+
+[Auditor]
+[ui] --> [auditor.wss+sdk] --> [auditor.peer]
+
+[CO1]
+[ui] --> [co1.wss+sdk] --> [co1.peer]
+
+[CO2]
+[ui] --> [co2.wss+sdk] --> [co2.peer]
+
+[CO3]
+[ui] --> [co3.wss+sdk] --> [co3.peer]
+
+
