@@ -1,0 +1,385 @@
+crypto-config
+├── ordererOrganizations
+│   └── beacon.ph
+│       ├── ca
+│       │   ├── 896a9a507b34f6306501ecfccd2da44ec1e444193500dfa51cb375f23493920e_sk
+│       │   └── ca.beacon.ph-cert.pem
+│       ├── msp
+│       │   ├── admincerts
+│       │   │   └── Admin@beacon.ph-cert.pem
+│       │   ├── cacerts
+│       │   │   └── ca.beacon.ph-cert.pem
+│       │   └── tlscacerts
+│       │       └── tlsca.beacon.ph-cert.pem
+│       ├── orderers
+│       │   └── orderer.beacon.ph
+│       │       ├── msp
+│       │       │   ├── admincerts
+│       │       │   │   └── Admin@beacon.ph-cert.pem
+│       │       │   ├── cacerts
+│       │       │   │   └── ca.beacon.ph-cert.pem
+│       │       │   ├── keystore
+│       │       │   │   └── d8280ba27d9fb50b0a4c0c986044e328c57472584418d7ae83f7e703ef38a327_sk
+│       │       │   ├── signcerts
+│       │       │   │   └── orderer.beacon.ph-cert.pem
+│       │       │   └── tlscacerts
+│       │       │       └── tlsca.beacon.ph-cert.pem
+│       │       └── tls
+│       │           ├── ca.crt
+│       │           ├── server.crt
+│       │           └── server.key
+│       ├── tlsca
+│       │   ├── 03023c3dc46f1a5c0a0e7c6a74b3713aad00340090932dd324819d78e85e8bba_sk
+│       │   └── tlsca.beacon.ph-cert.pem
+│       └── users
+│           └── Admin@beacon.ph
+│               ├── msp
+│               │   ├── admincerts
+│               │   │   └── Admin@beacon.ph-cert.pem
+│               │   ├── cacerts
+│               │   │   └── ca.beacon.ph-cert.pem
+│               │   ├── keystore
+│               │   │   └── afefaa95392bfba2c397b9c9fb4d56f6f9b38c4aefa450dacb8a2f838a22ee4a_sk
+│               │   ├── signcerts
+│               │   │   └── Admin@beacon.ph-cert.pem
+│               │   └── tlscacerts
+│               │       └── tlsca.beacon.ph-cert.pem
+│               └── tls
+│                   ├── ca.crt
+│                   ├── client.crt
+│                   └── client.key
+└── peerOrganizations
+    ├── auditor.ph
+    │   ├── ca
+    │   │   ├── 14089ea28780ecb8b66cfac73f3425b83922f878e61f4daec0c77d4905352453_sk
+    │   │   └── ca.auditor.ph-cert.pem
+    │   ├── msp
+    │   │   ├── admincerts
+    │   │   │   └── Admin@auditor.ph-cert.pem
+    │   │   ├── cacerts
+    │   │   │   └── ca.auditor.ph-cert.pem
+    │   │   ├── config.yaml
+    │   │   └── tlscacerts
+    │   │       └── tlsca.auditor.ph-cert.pem
+    │   ├── peers
+    │   │   ├── peer0.auditor.ph
+    │   │   │   ├── msp
+    │   │   │   │   ├── admincerts
+    │   │   │   │   │   └── Admin@auditor.ph-cert.pem
+    │   │   │   │   ├── cacerts
+    │   │   │   │   │   └── ca.auditor.ph-cert.pem
+    │   │   │   │   ├── config.yaml
+    │   │   │   │   ├── keystore
+    │   │   │   │   │   └── 8d4a5d5b119f455d90732893c50cf1eb62ec94474744b7a5b876ba326b2da80e_sk
+    │   │   │   │   ├── signcerts
+    │   │   │   │   │   └── peer0.auditor.ph-cert.pem
+    │   │   │   │   └── tlscacerts
+    │   │   │   │       └── tlsca.auditor.ph-cert.pem
+    │   │   │   └── tls
+    │   │   │       ├── ca.crt
+    │   │   │       ├── server.crt
+    │   │   │       └── server.key
+    │   │   └── peer1.auditor.ph
+    │   │       ├── msp
+    │   │       │   ├── admincerts
+    │   │       │   │   └── Admin@auditor.ph-cert.pem
+    │   │       │   ├── cacerts
+    │   │       │   │   └── ca.auditor.ph-cert.pem
+    │   │       │   ├── config.yaml
+    │   │       │   ├── keystore
+    │   │       │   │   └── f5661ffa4479ecbe3ad5672e4bb0d4f4555686d6bea3cd69bc232ea768d848bb_sk
+    │   │       │   ├── signcerts
+    │   │       │   │   └── peer1.auditor.ph-cert.pem
+    │   │       │   └── tlscacerts
+    │   │       │       └── tlsca.auditor.ph-cert.pem
+    │   │       └── tls
+    │   │           ├── ca.crt
+    │   │           ├── server.crt
+    │   │           └── server.key
+    │   ├── tlsca
+    │   │   ├── e2d4497910a2f8c3e32d658ebc43c02295c047e151f3f9b2a029c78772a1b526_sk
+    │   │   └── tlsca.auditor.ph-cert.pem
+    │   └── users
+    │       ├── Admin@auditor.ph
+    │       │   ├── msp
+    │       │   │   ├── admincerts
+    │       │   │   │   └── Admin@auditor.ph-cert.pem
+    │       │   │   ├── cacerts
+    │       │   │   │   └── ca.auditor.ph-cert.pem
+    │       │   │   ├── keystore
+    │       │   │   │   └── 9b66febedf7b705187f0838cf935f7e5c0cea70b3bc5ae2f687cb3afb8aed546_sk
+    │       │   │   ├── signcerts
+    │       │   │   │   └── Admin@auditor.ph-cert.pem
+    │       │   │   └── tlscacerts
+    │       │   │       └── tlsca.auditor.ph-cert.pem
+    │       │   └── tls
+    │       │       ├── ca.crt
+    │       │       ├── client.crt
+    │       │       └── client.key
+    │       └── User1@auditor.ph
+    │           ├── msp
+    │           │   ├── admincerts
+    │           │   │   └── User1@auditor.ph-cert.pem
+    │           │   ├── cacerts
+    │           │   │   └── ca.auditor.ph-cert.pem
+    │           │   ├── keystore
+    │           │   │   └── 47c1ddeaa07219967fd82202790b207624e3317f9185069fb43ee288027e2227_sk
+    │           │   ├── signcerts
+    │           │   │   └── User1@auditor.ph-cert.pem
+    │           │   └── tlscacerts
+    │           │       └── tlsca.auditor.ph-cert.pem
+    │           └── tls
+    │               ├── ca.crt
+    │               ├── client.crt
+    │               └── client.key
+    ├── beacon.ph
+    │   ├── ca
+    │   │   ├── 1d3ded055ff690a67eb648aa0aae80c318107f1e60ee4af795d59c5f9633cff2_sk
+    │   │   └── ca.beacon.ph-cert.pem
+    │   ├── msp
+    │   │   ├── admincerts
+    │   │   │   └── Admin@beacon.ph-cert.pem
+    │   │   ├── cacerts
+    │   │   │   └── ca.beacon.ph-cert.pem
+    │   │   ├── config.yaml
+    │   │   └── tlscacerts
+    │   │       └── tlsca.beacon.ph-cert.pem
+    │   ├── peers
+    │   │   ├── peer0.beacon.ph
+    │   │   │   ├── msp
+    │   │   │   │   ├── admincerts
+    │   │   │   │   │   └── Admin@beacon.ph-cert.pem
+    │   │   │   │   ├── cacerts
+    │   │   │   │   │   └── ca.beacon.ph-cert.pem
+    │   │   │   │   ├── config.yaml
+    │   │   │   │   ├── keystore
+    │   │   │   │   │   └── fd0288130b36bb78520f73f6df52826892a72dc96976ee5dc324928c369d2fef_sk
+    │   │   │   │   ├── signcerts
+    │   │   │   │   │   └── peer0.beacon.ph-cert.pem
+    │   │   │   │   └── tlscacerts
+    │   │   │   │       └── tlsca.beacon.ph-cert.pem
+    │   │   │   └── tls
+    │   │   │       ├── ca.crt
+    │   │   │       ├── server.crt
+    │   │   │       └── server.key
+    │   │   └── peer1.beacon.ph
+    │   │       ├── msp
+    │   │       │   ├── admincerts
+    │   │       │   │   └── Admin@beacon.ph-cert.pem
+    │   │       │   ├── cacerts
+    │   │       │   │   └── ca.beacon.ph-cert.pem
+    │   │       │   ├── config.yaml
+    │   │       │   ├── keystore
+    │   │       │   │   └── c2f5822b733f492dba85aa73e219aabcd01d7e4a4452f8de70385e32f95f6425_sk
+    │   │       │   ├── signcerts
+    │   │       │   │   └── peer1.beacon.ph-cert.pem
+    │   │       │   └── tlscacerts
+    │   │       │       └── tlsca.beacon.ph-cert.pem
+    │   │       └── tls
+    │   │           ├── ca.crt
+    │   │           ├── server.crt
+    │   │           └── server.key
+    │   ├── tlsca
+    │   │   ├── fc4121b60969435e01c8bac20fd5c25db270875fb2b82173e139bb88cecd32ef_sk
+    │   │   └── tlsca.beacon.ph-cert.pem
+    │   └── users
+    │       ├── Admin@beacon.ph
+    │       │   ├── msp
+    │       │   │   ├── admincerts
+    │       │   │   │   └── Admin@beacon.ph-cert.pem
+    │       │   │   ├── cacerts
+    │       │   │   │   └── ca.beacon.ph-cert.pem
+    │       │   │   ├── keystore
+    │       │   │   │   └── 62c6d3cba1819e60f8097c82af0daf887eb456243988fff3290ae138e05bbbac_sk
+    │       │   │   ├── signcerts
+    │       │   │   │   └── Admin@beacon.ph-cert.pem
+    │       │   │   └── tlscacerts
+    │       │   │       └── tlsca.beacon.ph-cert.pem
+    │       │   └── tls
+    │       │       ├── ca.crt
+    │       │       ├── client.crt
+    │       │       └── client.key
+    │       └── User1@beacon.ph
+    │           ├── msp
+    │           │   ├── admincerts
+    │           │   │   └── User1@beacon.ph-cert.pem
+    │           │   ├── cacerts
+    │           │   │   └── ca.beacon.ph-cert.pem
+    │           │   ├── keystore
+    │           │   │   └── 97ae3da7e9961b3c087de25919d90a868beba5f057456e370901df3b75398b17_sk
+    │           │   ├── signcerts
+    │           │   │   └── User1@beacon.ph-cert.pem
+    │           │   └── tlscacerts
+    │           │       └── tlsca.beacon.ph-cert.pem
+    │           └── tls
+    │               ├── ca.crt
+    │               ├── client.crt
+    │               └── client.key
+    ├── co1.org
+    │   ├── ca
+    │   │   ├── 12765b73eb1a76d9b9faaf2075449a06f772ad6f7c5e592a374dcba11e3448b2_sk
+    │   │   └── ca.co1.org-cert.pem
+    │   ├── msp
+    │   │   ├── admincerts
+    │   │   │   └── Admin@co1.org-cert.pem
+    │   │   ├── cacerts
+    │   │   │   └── ca.co1.org-cert.pem
+    │   │   ├── config.yaml
+    │   │   └── tlscacerts
+    │   │       └── tlsca.co1.org-cert.pem
+    │   ├── peers
+    │   │   ├── peer0.co1.org
+    │   │   │   ├── msp
+    │   │   │   │   ├── admincerts
+    │   │   │   │   │   └── Admin@co1.org-cert.pem
+    │   │   │   │   ├── cacerts
+    │   │   │   │   │   └── ca.co1.org-cert.pem
+    │   │   │   │   ├── config.yaml
+    │   │   │   │   ├── keystore
+    │   │   │   │   │   └── 85f95f7b9377329951b70fff3789a52989df6ab586c239a5b5bd3d3d7117e7c8_sk
+    │   │   │   │   ├── signcerts
+    │   │   │   │   │   └── peer0.co1.org-cert.pem
+    │   │   │   │   └── tlscacerts
+    │   │   │   │       └── tlsca.co1.org-cert.pem
+    │   │   │   └── tls
+    │   │   │       ├── ca.crt
+    │   │   │       ├── server.crt
+    │   │   │       └── server.key
+    │   │   └── peer1.co1.org
+    │   │       ├── msp
+    │   │       │   ├── admincerts
+    │   │       │   │   └── Admin@co1.org-cert.pem
+    │   │       │   ├── cacerts
+    │   │       │   │   └── ca.co1.org-cert.pem
+    │   │       │   ├── config.yaml
+    │   │       │   ├── keystore
+    │   │       │   │   └── b108f6c58657df827178dfb9c276975970b4e034b3670bb075888ec643bb19c9_sk
+    │   │       │   ├── signcerts
+    │   │       │   │   └── peer1.co1.org-cert.pem
+    │   │       │   └── tlscacerts
+    │   │       │       └── tlsca.co1.org-cert.pem
+    │   │       └── tls
+    │   │           ├── ca.crt
+    │   │           ├── server.crt
+    │   │           └── server.key
+    │   ├── tlsca
+    │   │   ├── c05bbae7e1f66e9476b89ce731ed79df7876472cb097ef7cf106483698dd1fa2_sk
+    │   │   └── tlsca.co1.org-cert.pem
+    │   └── users
+    │       ├── Admin@co1.org
+    │       │   ├── msp
+    │       │   │   ├── admincerts
+    │       │   │   │   └── Admin@co1.org-cert.pem
+    │       │   │   ├── cacerts
+    │       │   │   │   └── ca.co1.org-cert.pem
+    │       │   │   ├── keystore
+    │       │   │   │   └── 87bbc69d06d92edf66a721c490d7ec7f11e80eb5f395fe59438ba1a302f08cbb_sk
+    │       │   │   ├── signcerts
+    │       │   │   │   └── Admin@co1.org-cert.pem
+    │       │   │   └── tlscacerts
+    │       │   │       └── tlsca.co1.org-cert.pem
+    │       │   └── tls
+    │       │       ├── ca.crt
+    │       │       ├── client.crt
+    │       │       └── client.key
+    │       └── User1@co1.org
+    │           ├── msp
+    │           │   ├── admincerts
+    │           │   │   └── User1@co1.org-cert.pem
+    │           │   ├── cacerts
+    │           │   │   └── ca.co1.org-cert.pem
+    │           │   ├── keystore
+    │           │   │   └── fac12f87ea302754f8711e616fef4e823cbcd1d8def1d4c312deae71c5deb2d9_sk
+    │           │   ├── signcerts
+    │           │   │   └── User1@co1.org-cert.pem
+    │           │   └── tlscacerts
+    │           │       └── tlsca.co1.org-cert.pem
+    │           └── tls
+    │               ├── ca.crt
+    │               ├── client.crt
+    │               └── client.key
+    └── co2.org
+        ├── ca
+        │   ├── 4ee5104e8a25a8400c8065e376aa3fc36b6487fdae7d8a835f6d47773493f173_sk
+        │   └── ca.co2.org-cert.pem
+        ├── msp
+        │   ├── admincerts
+        │   │   └── Admin@co2.org-cert.pem
+        │   ├── cacerts
+        │   │   └── ca.co2.org-cert.pem
+        │   ├── config.yaml
+        │   └── tlscacerts
+        │       └── tlsca.co2.org-cert.pem
+        ├── peers
+        │   ├── peer0.co2.org
+        │   │   ├── msp
+        │   │   │   ├── admincerts
+        │   │   │   │   └── Admin@co2.org-cert.pem
+        │   │   │   ├── cacerts
+        │   │   │   │   └── ca.co2.org-cert.pem
+        │   │   │   ├── config.yaml
+        │   │   │   ├── keystore
+        │   │   │   │   └── cce63c78a979a9b62c5cb951195f1b0e063ae51d7c865eb4916ae5fcaf87a69e_sk
+        │   │   │   ├── signcerts
+        │   │   │   │   └── peer0.co2.org-cert.pem
+        │   │   │   └── tlscacerts
+        │   │   │       └── tlsca.co2.org-cert.pem
+        │   │   └── tls
+        │   │       ├── ca.crt
+        │   │       ├── server.crt
+        │   │       └── server.key
+        │   └── peer1.co2.org
+        │       ├── msp
+        │       │   ├── admincerts
+        │       │   │   └── Admin@co2.org-cert.pem
+        │       │   ├── cacerts
+        │       │   │   └── ca.co2.org-cert.pem
+        │       │   ├── config.yaml
+        │       │   ├── keystore
+        │       │   │   └── 3944429b9f75460c217d3b50ff92797b5ba10dc922dd02200eb6dd84f33ce470_sk
+        │       │   ├── signcerts
+        │       │   │   └── peer1.co2.org-cert.pem
+        │       │   └── tlscacerts
+        │       │       └── tlsca.co2.org-cert.pem
+        │       └── tls
+        │           ├── ca.crt
+        │           ├── server.crt
+        │           └── server.key
+        ├── tlsca
+        │   ├── 28960ab4301d0c3cd2c1fdf3d813f6e0dc9563f9fbfef2e96e9de9e244d3c747_sk
+        │   └── tlsca.co2.org-cert.pem
+        └── users
+            ├── Admin@co2.org
+            │   ├── msp
+            │   │   ├── admincerts
+            │   │   │   └── Admin@co2.org-cert.pem
+            │   │   ├── cacerts
+            │   │   │   └── ca.co2.org-cert.pem
+            │   │   ├── keystore
+            │   │   │   └── c22f6c13d7fdc9c0a7e1f89dfb07ff55df60405b9cbbc2cedd88fe6f68f0d94b_sk
+            │   │   ├── signcerts
+            │   │   │   └── Admin@co2.org-cert.pem
+            │   │   └── tlscacerts
+            │   │       └── tlsca.co2.org-cert.pem
+            │   └── tls
+            │       ├── ca.crt
+            │       ├── client.crt
+            │       └── client.key
+            └── User1@co2.org
+                ├── msp
+                │   ├── admincerts
+                │   │   └── User1@co2.org-cert.pem
+                │   ├── cacerts
+                │   │   └── ca.co2.org-cert.pem
+                │   ├── keystore
+                │   │   └── 5984b4638a0c55733057c1ddd5f9eef026c91d4788bc3864d3f39346e9cbc15e_sk
+                │   ├── signcerts
+                │   │   └── User1@co2.org-cert.pem
+                │   └── tlscacerts
+                │       └── tlsca.co2.org-cert.pem
+                └── tls
+                    ├── ca.crt
+                    ├── client.crt
+                    └── client.key
+
+191 directories, 191 files

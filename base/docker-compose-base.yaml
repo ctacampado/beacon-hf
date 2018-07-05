@@ -31,84 +31,174 @@ services:
     ports:
       - 7050:7050
 
-  peer0.donors.beacon.ph:
-    container_name: peer0.donors.beacon.ph
+  peer0.beacon.ph:
+    container_name: peer0.beacon.ph
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer0.donors.beacon.ph
-      - CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.donors.beacon.ph:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.donors.beacon.ph:7051
-      - CORE_PEER_LOCALMSPID=donorsMSP
+      - CORE_PEER_ID=peer0.beacon.ph
+      - CORE_PEER_ADDRESS=peer0.beacon.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.beacon.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.beacon.ph:7051
+      - CORE_PEER_LOCALMSPID=beaconMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls:/etc/hyperledger/fabric/tls
-        - peer0.donors.beacon.ph:/var/hyperledger/production
-        - ../../go_workspace/src/beacon-co:/opt/gopath/src/chaincode/beacon-co
+        - ../crypto-config/peerOrganizations/beacon.ph/peers/peer0.beacon.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/beacon.ph/peers/peer0.beacon.ph/tls:/etc/hyperledger/fabric/tls
+        - peer0.beacon.ph:/var/hyperledger/production
+        - ../go_workspace/src/beacon-cmpgns:/opt/gopath/src/chaincode/beacon-cmpgns
+        - ../go_workspace/src/beacon-transact:/opt/gopath/src/chaincode/beacon-transact
+        - ../go_workspace/src/beacon-identity:/opt/gopath/src/chaincode/beacon-identity
     ports:
       - 7051:7051
       - 7053:7053
 
-  peer1.donors.beacon.ph:
-    container_name: peer1.donors.beacon.ph
+  peer1.beacon.ph:
+    container_name: peer1.beacon.ph
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer1.donors.beacon.ph
-      - CORE_PEER_ADDRESS=peer1.donors.beacon.ph:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.donors.beacon.ph:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.donors.beacon.ph:7051
-      - CORE_PEER_LOCALMSPID=donorsMSP
+      - CORE_PEER_ID=peer1.beacon.ph
+      - CORE_PEER_ADDRESS=peer1.beacon.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.beacon.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.beacon.ph:7051
+      - CORE_PEER_LOCALMSPID=beaconMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer1.donors.beacon.ph/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/donors.beacon.ph/peers/peer1.donors.beacon.ph/tls:/etc/hyperledger/fabric/tls
-        - peer1.donors.beacon.ph:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/beacon.ph/peers/peer1.beacon.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/beacon.ph/peers/peer1.beacon.ph/tls:/etc/hyperledger/fabric/tls
+        - peer1.beacon.ph:/var/hyperledger/production
     ports:
       - 9051:7051
       - 9053:7053
 
-  peer0.redcross.org.ph:
-    container_name: peer0.redcross.org.ph
+  peer0.auditor.ph:
+    container_name: peer0.auditor.ph
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer0.redcross.org.ph
-      - CORE_PEER_ADDRESS=peer0.redcross.org.ph:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.redcross.org.ph:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.redcross.org.ph:7051
-      - CORE_PEER_LOCALMSPID=redcrossphMSP
+      - CORE_PEER_ID=peer0.auditor.ph
+      - CORE_PEER_ADDRESS=peer0.auditor.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.auditor.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.auditor.ph:7051
+      - CORE_PEER_LOCALMSPID=auditorMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/tls:/etc/hyperledger/fabric/tls
-        - peer0.redcross.org.ph:/var/hyperledger/production
-        - ../../go_workspace/src/beacon-co:/opt/gopath/src/chaincode/beacon-co
+        - ../crypto-config/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls:/etc/hyperledger/fabric/tls
+        - peer0.auditor.ph:/var/hyperledger/production
+        - ../go_workspace/src/beacon-cmpgns:/opt/gopath/src/chaincode/beacon-cmpgns
+        - ../go_workspace/src/beacon-transact:/opt/gopath/src/chaincode/beacon-transact
+        - ../go_workspace/src/beacon-identity:/opt/gopath/src/chaincode/beacon-identity
     ports:
       - 8051:7051
       - 8053:7053
 
-  peer1.redcross.org.ph:
-    container_name: peer1.redcross.org.ph
+  peer1.auditor.ph:
+    container_name: peer1.auditor.ph
     extends:
       file: peer-base.yaml
       service: peer-base
     environment:
-      - CORE_PEER_ID=peer1.redcross.org.ph
-      - CORE_PEER_ADDRESS=peer1.redcross.org.ph:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.redcross.org.ph:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.redcross.org.ph:7051
-      - CORE_PEER_LOCALMSPID=redcrossphMSP
+      - CORE_PEER_ID=peer1.auditor.ph
+      - CORE_PEER_ADDRESS=peer1.auditor.ph:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.auditor.ph:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.auditor.ph:7051
+      - CORE_PEER_LOCALMSPID=auditorMSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer1.redcross.org.ph/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/redcross.org.ph/peers/peer1.redcross.org.ph/tls:/etc/hyperledger/fabric/tls
-        - peer1.redcross.org.ph:/var/hyperledger/production
+        - ../crypto-config/peerOrganizations/auditor.ph/peers/peer1.auditor.ph/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/auditor.ph/peers/peer1.auditor.ph/tls:/etc/hyperledger/fabric/tls
+        - peer1.auditor.ph:/var/hyperledger/production
     ports:
       - 6051:7051
       - 6053:7053
+
+  peer0.co1.org:
+    container_name: peer0.co1.org
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.co1.org
+      - CORE_PEER_ADDRESS=peer0.co1.org:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.co1.org:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.co1.org:7051
+      - CORE_PEER_LOCALMSPID=co1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/co1.org/peers/peer0.co1.org/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/co1.org/peers/peer0.co1.org/tls:/etc/hyperledger/fabric/tls
+        - peer0.co1.org:/var/hyperledger/production
+        - ../go_workspace/src/beacon-cmpgns:/opt/gopath/src/chaincode/beacon-cmpgns
+        - ../go_workspace/src/beacon-transact:/opt/gopath/src/chaincode/beacon-transact
+        - ../go_workspace/src/beacon-identity:/opt/gopath/src/chaincode/beacon-identity
+    ports:
+      - 10051:7051
+      - 10053:7053
+
+  peer1.co1.org:
+    container_name: peer1.co1.org
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.co1.org
+      - CORE_PEER_ADDRESS=peer1.co1.org:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.co1.org:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.co1.org:7051
+      - CORE_PEER_LOCALMSPID=co1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/co1.org/peers/peer1.co1.org/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/co1.org/peers/peer1.co1.org/tls:/etc/hyperledger/fabric/tls
+        - peer1.co1.org:/var/hyperledger/production
+    ports:
+      - 11051:7051
+      - 11053:7053
+
+  peer0.co2.org:
+    container_name: peer0.co2.org
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.co2.org
+      - CORE_PEER_ADDRESS=peer0.co2.org:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.co2.org:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.co2.org:7051
+      - CORE_PEER_LOCALMSPID=co2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/co2.org/peers/peer0.co2.org/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/co2.org/peers/peer0.co2.org/tls:/etc/hyperledger/fabric/tls
+        - peer0.co2.org:/var/hyperledger/production
+        - ../go_workspace/src/beacon-cmpgns:/opt/gopath/src/chaincode/beacon-cmpgns
+        - ../go_workspace/src/beacon-transact:/opt/gopath/src/chaincode/beacon-transact
+        - ../go_workspace/src/beacon-identity:/opt/gopath/src/chaincode/beacon-identity
+    ports:
+      - 12051:7051
+      - 12053:7053
+
+  peer1.co2.org:
+    container_name: peer1.co2.org
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.co2.org
+      - CORE_PEER_ADDRESS=peer1.co2.org:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.co2.org:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.co2.org:7051
+      - CORE_PEER_LOCALMSPID=co2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/co2.org/peers/peer1.co2.org/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/co2.org/peers/peer1.co2.org/tls:/etc/hyperledger/fabric/tls
+        - peer1.co2.org:/var/hyperledger/production
+    ports:
+      - 13051:7051
+      - 13053:7053

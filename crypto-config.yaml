@@ -8,15 +8,29 @@ OrdererOrgs:
     Specs:
       - Hostname: orderer
 PeerOrgs:
-  - Name: donors
-    Domain: donors.beacon.ph
+  - Name: beacon
+    Domain: beacon.ph
     EnableNodeOUs: true
     Template:
       Count: 2
     Users:
       Count: 1
-  - Name: redcrossph
-    Domain: redcross.org.ph
+  - Name: auditor
+    Domain: auditor.ph
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: co1
+    Domain: co1.org
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: co2
+    Domain: co2.org
     EnableNodeOUs: true
     Template:
       Count: 2

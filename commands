@@ -1,13 +1,55 @@
+#generate crypto-materials
 cryptogen generate --config=./crypto-config.yaml
+#generate genesis block
 configtxgen -profile OrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
-export CHANNEL_NAME=donatercphch  && configtxgen -profile donatercphch -outputCreateChannelTx ./channel-artifacts/donatercphch.tx -channelID $CHANNEL_NAME
 
-configtxgen -profile donatercphch -outputAnchorPeersUpdate ./channel-artifacts/redcrossphMSPanchors.tx -channelID $CHANNEL_NAME -asOrg redcrossphMSP
+#create channels
+export CHANNEL_NAME=identities && configtxgen -profile identities -outputCreateChannelTx ./channel-artifacts/identities.tx -channelID $CHANNEL_NAME
 
-configtxgen -profile donatercphch -outputAnchorPeersUpdate ./channel-artifacts/donorsMSPanchors.tx -channelID $CHANNEL_NAME -asOrg donorsMSP
+export CHANNEL_NAME=campaigns && configtxgen -profile campaigns -outputCreateChannelTx ./channel-artifacts/campaigns.tx -channelID $CHANNEL_NAME
 
-docker exec -it cli-rcph bash
+export CHANNEL_NAME=transactionsco1 && configtxgen -profile transactionsco1 -outputCreateChannelTx ./channel-artifacts/transactionsco1.tx -channelID $CHANNEL_NAME
+
+export CHANNEL_NAME=transactionsco2 && configtxgen -profile transactionsco2 -outputCreateChannelTx ./channel-artifacts/transactionsco2.tx -channelID $CHANNEL_NAME
+
+
+#create anchor peers
+export CHANNEL_NAME=identities && configtxgen -profile identities -outputAnchorPeersUpdate ./channel-artifacts/beaconMSPidentitiesanchors.tx -channelID $CHANNEL_NAME -asOrg beaconMSP
+
+export CHANNEL_NAME=identities && configtxgen -profile identities -outputAnchorPeersUpdate ./channel-artifacts/auditorMSPidentitiesanchors.tx -channelID $CHANNEL_NAME -asOrg auditorMSP
+
+export CHANNEL_NAME=identities && configtxgen -profile identities -outputAnchorPeersUpdate ./channel-artifacts/co1MSPidentitiesanchors.tx -channelID $CHANNEL_NAME -asOrg co1MSP
+
+export CHANNEL_NAME=identities && configtxgen -profile identities -outputAnchorPeersUpdate ./channel-artifacts/co2MSPidentitiesanchors.tx -channelID $CHANNEL_NAME -asOrg co2MSP
+
+export CHANNEL_NAME=campaigns && configtxgen -profile campaigns -outputAnchorPeersUpdate ./channel-artifacts/beaconMSPcampaignsanchors.tx -channelID $CHANNEL_NAME -asOrg beaconMSP
+
+export CHANNEL_NAME=campaigns && configtxgen -profile campaigns -outputAnchorPeersUpdate ./channel-artifacts/auditorMSPcampaignsanchors.tx -channelID $CHANNEL_NAME -asOrg auditorMSP
+
+export CHANNEL_NAME=campaigns && configtxgen -profile campaigns -outputAnchorPeersUpdate ./channel-artifacts/co1MSPcampaignsanchors.tx -channelID $CHANNEL_NAME -asOrg co1MSP
+
+export CHANNEL_NAME=campaigns && configtxgen -profile campaigns -outputAnchorPeersUpdate ./channel-artifacts/co2MSPcampaignsanchors.tx -channelID $CHANNEL_NAME -asOrg co2MSP
+
+export CHANNEL_NAME=transactionsco1 && configtxgen -profile transactionsco1 -outputAnchorPeersUpdate ./channel-artifacts/beaconMSPtransactionsco1anchors.tx -channelID $CHANNEL_NAME -asOrg beaconMSP
+
+export CHANNEL_NAME=transactionsco1 && configtxgen -profile transactionsco1 -outputAnchorPeersUpdate ./channel-artifacts/auditorMSPtransactionsco1anchors.tx -channelID $CHANNEL_NAME -asOrg auditorMSP
+
+export CHANNEL_NAME=transactionsco1 && configtxgen -profile transactionsco1 -outputAnchorPeersUpdate ./channel-artifacts/co1MSPtransactionsco1anchors.tx -channelID $CHANNEL_NAME -asOrg co1MSP
+
+export CHANNEL_NAME=transactionsco1 && configtxgen -profile transactionsco1 -outputAnchorPeersUpdate ./channel-artifacts/co2MSPtransactionsco1anchors.tx -channelID $CHANNEL_NAME -asOrg co2MSP
+
+export CHANNEL_NAME=transactionsco2 && configtxgen -profile transactionsco2 -outputAnchorPeersUpdate ./channel-artifacts/beaconMSPtransactionsco2anchors.tx -channelID $CHANNEL_NAME -asOrg beaconMSP
+
+export CHANNEL_NAME=transactionsco2 && configtxgen -profile transactionsco2 -outputAnchorPeersUpdate ./channel-artifacts/auditorMSPtransactionsco2anchors.tx -channelID $CHANNEL_NAME -asOrg auditorMSP
+
+export CHANNEL_NAME=transactionsco2 && configtxgen -profile transactionsco2 -outputAnchorPeersUpdate ./channel-artifacts/co1MSPtransactionsco2anchors.tx -channelID $CHANNEL_NAME -asOrg co1MSP
+
+export CHANNEL_NAME=transactionsco2 && configtxgen -profile transactionsco2 -outputAnchorPeersUpdate ./channel-artifacts/co2MSPtransactionsco2anchors.tx -channelID $CHANNEL_NAME -asOrg co2MSP
+
+
+#open cli
+docker exec -it cli-beacon bash
 
 export CHANNEL_NAME=donatercphch
 
@@ -16,55 +58,142 @@ export CHANNEL_NAME=donatercphch
 # we also pass the path for the orderer ca-cert in order to verify the TLS handshake
 # be sure to export or replace the $CHANNEL_NAME variable appropriately
 
-peer channel create -o orderer.beacon.ph:7050 -c $CHANNEL_NAME -f ./channel-artifacts/donatercphch.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+export CHANNEL_NAME=identities
 
-peer channel fetch newest donatercphch.block -c donatercphch --orderer orderer.beacon.ph:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+peer channel create -o orderer.beacon.ph:7050 -c $CHANNEL_NAME -f ./channel-artifacts/identities.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-peer channel join -b donatercphch.block
+peer channel create -o orderer.beacon.ph:7050 -c $CHANNEL_NAME -f ./channel-artifacts/campaigns.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt peer channel join -b donatercphch.block
+peer channel create -o orderer.beacon.ph:7050 -c transactionsco1 -f ./channel-artifacts/transactionsco1.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+
+peer channel fetch newest campaigns.block -c campaigns --orderer orderer.beacon.ph:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+peer channel fetch newest transactionsco1.block -c transactionsco1 --orderer orderer.beacon.ph:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+peer channel join -b identities.block
+
+peer channel join -b campaigns.block
+
+peer channel join -b transactionsco1.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer channel join -b transactionsco1.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer channel join -b transactionsco1.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer channel join -b identities.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer channel join -b campaigns.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer channel join -b campaigns.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co2.org/users/Admin@co2.org/msp CORE_PEER_ADDRESS=peer0.co2.org:7051 CORE_PEER_LOCALMSPID="co2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co2.org/peers/peer0.co2.org/tls/ca.crt peer channel join -b campaigns.block
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer1.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer1.donors.beacon.ph/tls/ca.crt peer channel join -b donatercphch.block
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/users/Admin@redcross.org.ph/msp CORE_PEER_ADDRESS=peer1.redcross.org.ph:7051 CORE_PEER_LOCALMSPID="redcrossphMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/peers/peer1.redcross.org.ph/tls/ca.crt peer channel join -b donatercphch.block
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/users/Admin@redcross.org.ph/msp CORE_PEER_ADDRESS=peer0.redcross.org.ph:7051 CORE_PEER_LOCALMSPID="redcrossphMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/redcross.org.ph/peers/peer0.redcross.org.ph/tls/ca.crt
-
 peer channel update -o orderer.beacon.ph:7050 -c $CHANNEL_NAME -f ./channel-artifacts/redcrossphMSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt peer channel update -o orderer.beacon.ph:7050 -c $CHANNEL_NAME -f ./channel-artifacts/donorsMSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-peer chaincode install -n cocampaignscc -v 1.0 -p chaincode/beacon-co
+peer chaincode install -n identitycc -v 1.8 -p chaincode/beacon-identity
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt peer chaincode install -n cocampaignscc -v 1.0 -p chaincode/beacon-co
+peer chaincode install -n cmpgnscc -v 1.2 -p chaincode/beacon-cmpgns
+
+peer chaincode install -n trnsctcc -v 1.0 -p chaincode/beacon-transact
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n trnsctcc -v 1.0 -p chaincode/beacon-transact
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer chaincode install -n trnsctcc -v 1.0 -p chaincode/beacon-transact
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n identitycc -v 1.9 -p chaincode/beacon-identity
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.3 -p chaincode/beacon-cmpgns
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.3 -p chaincode/beacon-cmpgns
 
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-peer chaincode instantiate -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C donatercphch -n cocampaignscc -v 1.0 -c '{"Args":[""]}' -P "OR ('redcrossphMSP.peer','donorsMSP.peer')"
+peer chaincode instantiate -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C identities -n identitycc -v 1.0 -c '{"Args":[""]}' -P "OR ('beaconMSP.peer','auditorMSP.peer')"
 
-peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C donatercphch -n cocampaignscc -v 1.2 -c '{"Args":[""]}' -P "OR('redcrossphMSP.peer','donorsMSP.peer')"
+peer chaincode instantiate -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C transactionsco1 -n trnsctcc -v 1.2 -c '{"Args":[""]}' -P "OR('beaconMSP.peer','auditorMSP.peer','co1MSP.peer')"
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C donatercphch -n cocampaignscc -v 1.1 -c '{"Args":[""]}' -P "OR('redcrossphMSP.peer','donorsMSP.peer')"
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/beacon.ph/users/Admin@beacon.ph/msp CORE_PEER_ADDRESS=peer0.beacon.ph:7051 CORE_PEER_LOCALMSPID="beaconMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/beacon.ph/peers/peer0.beacon.ph/tls/ca.crt peer chaincode instantiate -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C campaigns -n cmpgnscc -v 1.1 -c '{"Args":[""]}' -P "AND(OR ('co1MSP.peer','co2MSP.peer'),OR ('beaconMSP.peer','auditorMSP.peer'))"
+
+peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C identities -n identitycc -v 1.1 -c '{"Args":[""]}' -P "OR('beaconMSP.peer','auditorMSP.peer')"
+
+peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C campaigns -n cmpgnscc -v 1.2 -c '{"Args":[""]}' -P "OR ('beaconMSP.peer','co1MSP.peer','auditorMSP.peer')"
+
+peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C transactionsco1 -n trnsctcc -v 1.3 -c '{"Args":[""]}' -P "OR('beaconMSP.peer','auditorMSP.peer','co1MSP.peer')"
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/beacon.ph/users/Admin@beacon.ph/msp CORE_PEER_ADDRESS=peer0.beacon.ph:7051 CORE_PEER_LOCALMSPID="beaconMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/beacon.ph/peers/peer0.beacon.ph/tls/ca.crt peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C identities -n identitycc -v 1.9 -c '{"Args":[""]}' -P "OR('beaconMSP.peer','auditorMSP.peer')"
 
 {"type": "addCampaign","coid": "123redcrossph123","params":"{"COID": "123redcrossph123","CampaignName": "Kadamay Housing Campaign","Description": "To provide Housing for Kadamay peeps","CampStartDate": "2018-06-19T18:55:05Z08:00","CampEndDate": "2018-09-19T18:55:05Z08:00","Status": 1,"CampaignAmount": 1000000}"}
 
-peer chaincode invoke -o orderer.beacon.ph:7050 -C donatercphch -n cocampaignscc -c '{"Function":"addCampaign","Args":["{\"type\": \"addCampaign\",\"coid\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\": \\\"789redcrossph789\\\",\\\"CampaignName\\\": \\\"Kadamay Housing Campaign\\\",\\\"Description\\\": \\\"To provide Housing for Kadamay peeps\\\",\\\"CampStartDate\\\": \\\"2018-06-19T18:55:05Z08:00\\\",\\\"CampEndDate\\\": \\\"2018-09-19T18:55:05Z08:00\\\",\\\"Status\\\": 1,\\\"CampaignAmount\\\": 1000000}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem 
+peer chaincode invoke -o orderer.beacon.ph:7050 -C identities -n identitycc -c '{"Function":"addIdentity","Args":["{\"type\": \"addIdentity\",\"AID\": \"AID123AID\",\"params\":\"{\\\"UserType\\\": \\\"Donor\\\",\\\"UserName\\\": \\\"chaddybihay\\\",\\\"Password\\\": \\\"chaddybihay\\\",\\\"Name\\\": \\\"Chaddy\\\",\\\"OrgName\\\": \\\"Beacon\\\",\\\"Email\\\": \\\"chaddybihay@gmail.com\\\",\\\"Surname\\\": \\\"Abihay\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt peer chaincode invoke -o orderer.beacon.ph:7050 -C donatercphch -n cocampaignscc -c '{"Function":"addCampaign","Args":["{\"type\": \"addCampaign\",\"coid\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\": \\\"789redcrossph789\\\",\\\"CampaignName\\\": \\\"Kadamay Housing Campaign\\\",\\\"Description\\\": \\\"To provide Housing for Kadamay peeps\\\",\\\"CampStartDate\\\": \\\"2018-06-19T18:55:05Z08:00\\\",\\\"CampEndDate\\\": \\\"2018-09-19T18:55:05Z08:00\\\",\\\"Status\\\": 1,\\\"CampaignAmount\\\": 1000000}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+peer chaincode invoke -o orderer.beacon.ph:7050 -C identities -n identitycc -c '{"Function":"addIdentity","Args":["{\"type\": \"addIdentity\",\"params\":\"{\\\"UserType\\\": \\\"CO\\\",\\\"UserName\\\": \\\"co1\\\",\\\"Password\\\": \\\"co1\\\",\\\"Name\\\": \\\"co1\\\",\\\"OrgName\\\": \\\"Charity Org 1\\\",\\\"Email\\\": \\\"co1@co1.com\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem 
+
+peer chaincode invoke -o orderer.beacon.ph:7050 -C campaigns -n cmpgnscc -c '{"Function":"addCampaign","Args":["{\"type\": \"addCampaign\",\"AID\": \"557ccef4-8d73-4759-9a8e-6014f4dec8d4\",\"params\":\"{\\\"CharityID\\\": \\\"557ccef4-8d73-4759-9a8e-6014f4dec8d4\\\",\\\"CampaignName\\\": \\\"Kadamay Housing Campaign\\\",\\\"Description\\\": \\\"To provide Housing for Kadamay peeps\\\",\\\"CampStartDate\\\": \\\"2018-06-19T18:55:05Z08:00\\\",\\\"CampEndDate\\\": \\\"2018-09-19T18:55:05Z08:00\\\",\\\"CampaignAmount\\\": \\\"1000000\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem 
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer chaincode invoke -o orderer.beacon.ph:7050 -C campaigns -n cmpgnscc -c '{"Function":"addCampaign","Args":["{\"type\": \"addCampaign\",\"AID\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\": \\\"789redcrossph789\\\",\\\"CampaignName\\\": \\\"Kadamay Housing Campaign\\\",\\\"Description\\\": \\\"To provide Housing for Kadamay peeps\\\",\\\"CampStartDate\\\": \\\"2018-06-19T18:55:05Z08:00\\\",\\\"CampEndDate\\\": \\\"2018-09-19T18:55:05Z08:00\\\",\\\"Status\\\": 1,\\\"CampaignAmount\\\": 1000000}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem 
 
 peer chaincode invoke -o orderer.beacon.ph:7050 -C donatercphch -n cocampaignscc -c '{"Function":"addCampaign","Args":["{\"type\": \"addCampaign\",\"coid\": \"456redcrossph456\",\"params\":\"{\\\"COID\\\": \\\"789redcrossph789\\\",\\\"CampaignName\\\": \\\"Kadamay Housing Campaign\\\",\\\"Description\\\": \\\"To provide Housing for Kadamay peeps\\\",\\\"CampStartDate\\\": \\\"2018-06-19T18:55:05Z08:00\\\",\\\"CampEndDate\\\": \\\"2018-09-19T18:55:05Z08:00\\\",\\\"Status\\\": 1,\\\"CampaignAmount\\\": 1000000}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-peer chaincode query -C donatercphch -n cocampaignscc -c '{"Args":["{\"coid\":\"789redcrossph789\"}"]}'
+peer chaincode query -C identities -n identitycc -c '{"Args":["{\"UserName\":\"ctacampado\"}"]}'
 
 {\\\"coid\\\":\\\"123redcrossph123\\\"}
 
-peer chaincode query -C donatercphch -n cocampaignscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"COID\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\":\\\"789redcrossph789\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+peer chaincode query -C identities -n identitycc -c '{"Function":"getIdentity","Args":["{\"type\": \"getIdentity\",\"params\":\"{\\\"UserType\\\":\\\"Donor\\\",\\\"ApprvlStatus\\\":\\\"APPRVD\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+peer chaincode invoke -C identities -n identitycc -c '{"Function":"modifyIdentity","Args":["{\"type\": \"modifyIdentity\",\"params\":\"{\\\"AID\\\":\\\"557ccef4-8d73-4759-9a8e-6014f4dec8d4\\\",\\\"ApprvlStatus\\\":\\\"APPRVD\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+peer chaincode invoke -C identities -n identitycc -c '{"Function":"modifyIdentity","Args":["{\"type\": \"modifyIdentity\",\"params\":\"{\\\"AID\\\":\\\"cc289acf-9807-4731-832d-b9c214fc4552\\\",\\\"WalletAddr\\\":\\\"39DqpoGdq3Q3z1j8XmAHEsuwDUd6q4KqKC\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+type TransactionParams struct {
+  TxnID            string             `json:"TxnID,omitempty"`
+  TxnType          string             `json:"TxnType,omitempty"`
+  AID              string             `json:"AID,omitempty"`
+  TxnDate          string             `json:"TxnDate,omitempty"`
+  DonationInfo     DonationInfo       `json:"DonationInfo,omitempty"`
+  DisbursementInfo []DisbursementInfo `json:"DisbursementInfo,omitempty"`
+}
+type DonationInfo struct {
+  WalletAddrSrc string `json:"WalletAddrSrc"`
+  WalletAddrDst string `json:"WalletAddrDst"`
+  CharityID     string `json:"CharityID"`
+  CampaignID    string `json:"CampaignID"`
+  Amount        string `json:"DonatedAmount"`
+  CoinsAPIToken string `json:"CoinsAPIToken"`
+}
+
+
+addTransaction
+peer chaincode invoke -C transactionsco1 -n trnsctcc -c '{"Function":"addTransaction","Args":["{\"type\": \"addTransaction\",\"params\":\"{\\\"TxnType\\\":\\\"Donation\\\",\\\"AID\\\":\\\"cc289acf-9807-4731-832d-b9c214fc4552\\\",\\\"DonationInfo\\\":{\\\"WalletAddrSrc\\\":\\\"39DqpoGdq3Q3z1j8XmAHEsuwDUd6q4KqKC\\\",\\\"WalletAddrDst\\\":\\\"3QwxTZXzf9RJFHsMc6CT1QNb7E1mcmWktk\\\",\\\"CharityID\\\":\\\"557ccef4-8d73-4759-9a8e-6014f4dec8d4\\\",\\\"CampaignID\\\":\\\"3facdc7b-f33e-4bc5-8d25-70d848eae264\\\",\\\"Amount\\\":\\\"5\\\",\\\"CoinsAPIToken\\\":\\\"AqZ6EujUJOcmJMzkgoqDMSO3luNrD7\\\"}}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+
+
+
+
+peer chaincode query -C identities -n identitycc -c '{"Function":"getIdentity","Args":["{\"type\": \"getIdentity\",\"params\":\"{\\\"UserType\\\":\\\"Donor\\\",\\\"ApprvlStatus\\\":\\\"APPRVD\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer0.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer0.donors.beacon.ph/tls/ca.crt peer chaincode query -C donatercphch -n cocampaignscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"COID\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\":\\\"789redcrossph789\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/users/Admin@donors.beacon.ph/msp CORE_PEER_ADDRESS=peer1.donors.beacon.ph:7051 CORE_PEER_LOCALMSPID="donorsMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/donors.beacon.ph/peers/peer1.donors.beacon.ph/tls/ca.crt peer chaincode query -C donatercphch -n cocampaignscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"COID\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\":\\\"789redcrossph789\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-peer chaincode query -C donatercphch -n cocampaignscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"COID\": \"789redcrossph789\",\"params\":\"{\\\"COID\\\":\\\"789redcrossph789\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+peer chaincode query -C identities -n identitycc -c '{"Function":"getIdentity","Args":["{\"type\": \"getIdentity\",\"params\":\"{\\\"UserType\\\":\\\"Donor\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+{CampaignID:6a975837-e949-45b0-bcce-0b227603bae4 CharityName: CharityID:557ccef4-8d73-4759-9a8e-6014f4dec8d4 CampaignName:Kadamay Housing Campaign2 Description:To provide Housing for Kadamay peeps CampaignCaption: CampStartDate:2018-06-19T18:55:05Z08:00 CampEndDate:2018-09-19T18:55:05Z08:00 CampCompDate:- CampaignPhoto: Status:PLEDGE CampaignAmount:199999 DonatedAmount:0 DisbursedAmount:0 RatingFive:0 RatingFour:0 RatingThree:0 RatingTwo:0 RatingOne:0}
+
+peer chaincode invoke -o orderer.beacon.ph:7050 -C campaigns -n cmpgnscc -c '{"Function":"addCampaign","Args":["{\"type\": \"addCampaign\",\"params\":\"{\\\"CharityID\\\": \\\"557ccef4-8d73-4759-9a8e-6014f4dec8d4\\\",\\\"CharityName\\\":\\\"BLINK\\\",\\\"CampaignName\\\": \\\"SB for CARL\\\",\\\"Description\\\": \\\"CARL NEEDS COFFEE\\\",\\\"CampStartDate\\\": \\\"2018-06-19T18:55:05Z08:00\\\",\\\"CampEndDate\\\": \\\"2018-09-19T18:55:05Z08:00\\\",\\\"CampaignAmount\\\": \\\"1000000\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem 
+
+peer chaincode query -C campaigns -n cmpgnscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"params\":\"{\\\"Status\\\":\\\"PLEDGE\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+peer chaincode invoke -C campaigns -n cmpgnscc -c '{"Function":"modifyCampaign","Args":["{\"type\": \"modifyCampaign\",\"params\":\"{\\\"CharityID\\\":\\\"557ccef4-8d73-4759-9a8e-6014f4dec8d4\\\",\\\"CampaignID\\\":\\\"3facdc7b-f33e-4bc5-8d25-70d848eae264\\\",\\\"Status\\\":\\\"COMPLETED\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+
+
+peer chaincode query -C campaigns -n cmpgnscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns2\",\"AID\": \"557ccef4-8d73-4759-9a8e-6014f4dec8d4\",\"params\":\"{\\\"CampaignID\\\":\\\"6a975837-e949-45b0-bcce-0b227603bae4\\\",\\\"CharityID\\\":\\\"557ccef4-8d73-4759-9a8e-6014f4dec8d4\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
 peer chaincode query -C donatercphch -n cocampaignscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"COID\": \"789redcrossph789\",\"params\":\"{\\\"CampaignName\\\":\\\"Kadamay Housing Campaign2\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
