@@ -12,7 +12,6 @@ volumes:
   ca.co1.org:
   ca.co2.org:
   peer0.beacon.ph:
-  peer1.beacon.ph:
   peer0.auditor.ph:
   peer1.auditor.ph:
   peer0.co1.org:
@@ -30,10 +29,10 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-beacon
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.beacon.ph-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/1d3ded055ff690a67eb648aa0aae80c318107f1e60ee4af795d59c5f9633cff2_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/8272d987c97be02461df4e1b131e52f4a0fa886d3bf306519f9eb0f3a39a4652_sk
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.beacon.ph-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/1d3ded055ff690a67eb648aa0aae80c318107f1e60ee4af795d59c5f9633cff2_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.beacon.ph-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/8272d987c97be02461df4e1b131e52f4a0fa886d3bf306519f9eb0f3a39a4652_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/beacon.ph/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_beacon
@@ -47,10 +46,10 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-auditor
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.auditor.ph-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/14089ea28780ecb8b66cfac73f3425b83922f878e61f4daec0c77d4905352453_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/abfaf63d78d2a3bc5259b1b834e7f028b6ae94e967f7c50f399bf73b589c0882_sk
     ports:
       - "8054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.auditor.ph-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/14089ea28780ecb8b66cfac73f3425b83922f878e61f4daec0c77d4905352453_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.auditor.ph-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/abfaf63d78d2a3bc5259b1b834e7f028b6ae94e967f7c50f399bf73b589c0882_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/auditor.ph/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_auditor
@@ -64,10 +63,10 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-co1
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.co1.org-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/12765b73eb1a76d9b9faaf2075449a06f772ad6f7c5e592a374dcba11e3448b2_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d61244f3f6461293eb45bc52599a93956d75f43495c45a0139a2f93e39716d8c_sk
     ports:
       - "9054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.co1.org-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/12765b73eb1a76d9b9faaf2075449a06f772ad6f7c5e592a374dcba11e3448b2_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.co1.org-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/d61244f3f6461293eb45bc52599a93956d75f43495c45a0139a2f93e39716d8c_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/co1.org/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_co1
@@ -81,10 +80,10 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-co2
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.co2.org-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4ee5104e8a25a8400c8065e376aa3fc36b6487fdae7d8a835f6d47773493f173_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/0de2ebde2a7148a82a0d8edf35f6696d79739f8a72ee7f65f77a2b4aa05527ba_sk
     ports:
       - "10054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.co2.org-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/4ee5104e8a25a8400c8065e376aa3fc36b6487fdae7d8a835f6d47773493f173_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.co2.org-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/0de2ebde2a7148a82a0d8edf35f6696d79739f8a72ee7f65f77a2b4aa05527ba_sk -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/co2.org/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_co2
@@ -117,24 +116,6 @@ services:
     networks:
       - beacon
     
-  peer1.beacon.ph:
-    container_name: peer1.beacon.ph
-    environment:
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-db2.beacon.ph:5984
-      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD
-      # provide the credentials for ledger to connect to CouchDB.  The username and password must
-      # match the username and password set for the associated CouchDB.
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=cdb
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=cdbpw
-    depends_on:
-      - couchdb-db2-beacon.ph
-    extends:
-      file:  base/docker-compose-base.yaml
-      service: peer1.beacon.ph
-    networks:
-      - beacon
-
   peer0.co1.org:
     container_name: peer0.co1.org
     environment:
@@ -256,19 +237,6 @@ services:
     networks:
       - beacon
 
-  couchdb-db2-beacon.ph:
-    container_name: couchdb-db2-beacon.ph
-    image: hyperledger/fabric-couchdb
-    # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
-    # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
-    environment:
-      - COUCHDB_USER=cdb
-      - COUCHDB_PASSWORD=cdbpw
-    ports:
-      - 6984:5984
-    networks:
-      - beacon
-
   couchdb-db1-auditor.ph:
     container_name: couchdb-db1-auditor.ph
     image: hyperledger/fabric-couchdb
@@ -343,7 +311,7 @@ services:
       - COUCHDB_USER=cdb
       - COUCHDB_PASSWORD=cdbpw
     ports:
-      - 12984:5984
+      - 13984:5984
     networks:
       - beacon
 
@@ -458,7 +426,7 @@ services:
       - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_ID=cli-co2
       - CORE_PEER_ADDRESS=peer0.co2.org:7051
-      - CORE_PEER_LOCALMSPID=co1MSP
+      - CORE_PEER_LOCALMSPID=co2MSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co2.org/peers/peer0.co2.org/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co2.org/peers/peer0.co2.org/tls/server.key

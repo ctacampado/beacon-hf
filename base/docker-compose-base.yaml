@@ -39,7 +39,6 @@ services:
     environment:
       - CORE_PEER_ID=peer0.beacon.ph
       - CORE_PEER_ADDRESS=peer0.beacon.ph:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.beacon.ph:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.beacon.ph:7051
       - CORE_PEER_LOCALMSPID=beaconMSP
     volumes:
@@ -53,26 +52,6 @@ services:
     ports:
       - 7051:7051
       - 7053:7053
-
-  peer1.beacon.ph:
-    container_name: peer1.beacon.ph
-    extends:
-      file: peer-base.yaml
-      service: peer-base
-    environment:
-      - CORE_PEER_ID=peer1.beacon.ph
-      - CORE_PEER_ADDRESS=peer1.beacon.ph:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.beacon.ph:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.beacon.ph:7051
-      - CORE_PEER_LOCALMSPID=beaconMSP
-    volumes:
-        - /var/run/:/host/var/run/
-        - ../crypto-config/peerOrganizations/beacon.ph/peers/peer1.beacon.ph/msp:/etc/hyperledger/fabric/msp
-        - ../crypto-config/peerOrganizations/beacon.ph/peers/peer1.beacon.ph/tls:/etc/hyperledger/fabric/tls
-        - peer1.beacon.ph:/var/hyperledger/production
-    ports:
-      - 9051:7051
-      - 9053:7053
 
   peer0.auditor.ph:
     container_name: peer0.auditor.ph
