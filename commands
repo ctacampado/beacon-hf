@@ -103,9 +103,9 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 
 peer chaincode install -n identitycc -v 1.0 -p chaincode/beacon-identity
 
-peer chaincode install -n cmpgnscc -v 1.2 -p chaincode/beacon-cmpgns
+peer chaincode install -n cmpgnscc -v 1.8 -p chaincode/beacon-cmpgns
 
-peer chaincode install -n trnsctcc -v 1.0 -p chaincode/beacon-transact
+peer chaincode install -n trnsctcc -v 1.8 -p chaincode/beacon-transact
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n identitycc -v 1.0 -p chaincode/beacon-identity
 
@@ -113,11 +113,11 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n identitycc -v 1.9 -p chaincode/beacon-identity
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.2 -p chaincode/beacon-cmpgns
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/users/Admin@co1.org/msp CORE_PEER_ADDRESS=peer0.co1.org:7051 CORE_PEER_LOCALMSPID="co1MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co1.org/peers/peer0.co1.org/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.8 -p chaincode/beacon-cmpgns
 
 CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co2.org/users/Admin@co2.org/msp CORE_PEER_ADDRESS=peer0.co2.org:7051 CORE_PEER_LOCALMSPID="co2MSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/co2.org/peers/peer0.co2.org/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.2 -p chaincode/beacon-cmpgns
 
-CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.1 -p chaincode/beacon-cmpgns
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/users/Admin@auditor.ph/msp CORE_PEER_ADDRESS=peer0.auditor.ph:7051 CORE_PEER_LOCALMSPID="auditorMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/auditor.ph/peers/peer0.auditor.ph/tls/ca.crt peer chaincode install -n cmpgnscc -v 1.8 -p chaincode/beacon-cmpgns
 
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
@@ -130,7 +130,7 @@ CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypt
 
 peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C identities -n identitycc -v 1.1 -c '{"Args":[""]}' -P "OR('beaconMSP.peer','auditorMSP.peer')"
 
-peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C campaigns -n cmpgnscc -v 1.2 -c '{"Args":[""]}' -P "OR ('beaconMSP.peer','co1MSP.peer','auditorMSP.peer')"
+peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C campaigns -n cmpgnscc -v 1.8 -c '{"Args":[""]}' -P "OR ('beaconMSP.peer','co1MSP.peer','auditorMSP.peer')"
 
 peer chaincode upgrade -o orderer.beacon.ph:7050 --tls --cafile $ORDERER_CA -C transactionsco1 -n trnsctcc -v 1.3 -c '{"Args":[""]}' -P "OR('beaconMSP.peer','auditorMSP.peer','co1MSP.peer')"
 
@@ -238,7 +238,7 @@ peer chaincode invoke -C campaigns -n cmpgnscc -c '{"Function":"modifyCampaign",
 
 peer chaincode query -C campaigns -n cmpgnscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"params\":\"{\\\"Status\\\":\\\"PLEDGE\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
-peer chaincode invoke -C campaigns -n cmpgnscc -c '{"Function":"modifyCampaign","Args":["{\"type\": \"modifyCampaign\",\"params\":\"{\\\"CharityID\\\":\\\"c61d54e7-e0a8-4672-820a-4bc44620f95a\\\",\\\"CampaignID\\\":\\\"26b86a66-30eb-42bc-ba8a-2fa41aef3afd\\\",\\\"DonatedAmount\\\":\\\"10\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
+peer chaincode invoke -C campaigns -n cmpgnscc -c '{"Function":"modifyCampaign","Args":["{\"function\":\"modifyCampaign\",\"type\":\"modifyCampaign\",\"params\":\"{\\\"CharityID\\\":\\\"c61d54e7-e0a8-4672-820a-4bc44620f95a\\\",\\\"CampaignID\\\":\\\"26b86a66-30eb-42bc-ba8a-2fa41aef3afd\\\",\\\"DonatedAmount\\\":\\\"10\\\"}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
 
 
 peer chaincode query -C campaigns -n cmpgnscc -c '{"Function":"getCOCampaigns","Args":["{\"type\": \"getCOCampaigns\",\"AID\": \"c61d54e7-e0a8-4672-820a-4bc44620f95a\",\"params\":\"{}\"}"]}' --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/beacon.ph/orderers/orderer.beacon.ph/msp/tlscacerts/tlsca.beacon.ph-cert.pem
