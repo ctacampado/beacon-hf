@@ -12,7 +12,7 @@ PeerOrgs:
     Domain: beacon.ph
     EnableNodeOUs: true
     Template:
-      Count: 2
+      Count: 1
     Users:
       Count: 1
   - Name: auditor
